@@ -1,0 +1,122 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Teacher List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Teacher List</h2>
+        <a href="{{ url_for('download_teachers') }}" class="btn btn-success mb-3">Download CSV</a>
+        <a href="{{ url_for('admin_dashboard') }}" class="btn btn-secondary mb-3 ml-2">Back</a>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Username</th>
+                    <th>Password</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for teacher in teachers %}
+                <tr>
+                    <td>{{ teacher.name }}</td>
+                    <td>{{ teacher.username }}</td>
+                    <td>{{ teacher.password }}</td>
+                    <td>
+                        <form method="POST" action="{{ url_for('delete_teacher_route', teacher_id=teacher.id) }}">
+
+                            <button class="btn btn-danger btn-sm" onclick="return confirm('Delete this teacher?')">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html> -->
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Teacher List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Teacher List</h2>
+        <a href="{{ url_for('download_teachers') }}" class="btn btn-success mb-3">Download CSV</a>
+        <a href="{{ url_for('admin_dashboard') }}" class="btn btn-secondary mb-3 ml-2">Back</a>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Password</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for teacher in teachers %}
+                <tr>
+                    <td>{{ teacher.id }}</td>
+                    <td>{{ teacher.username }}</td>
+                    <td>{{ teacher.password }}</td>
+                    <td>
+                        <form method="POST" action="{{ url_for('delete_teacher_route', teacher_id=teacher.id) }}">
+                            <button class="btn btn-danger btn-sm" onclick="return confirm('Delete this teacher?')">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Teacher List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Teacher List</h2>
+        <a href="{{ url_for('download_teachers') }}" class="btn btn-success mb-3">Download CSV</a>
+        <a href="{{ url_for('admin_dashboard') }}" class="btn btn-secondary mb-3 ml-2">Back</a>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Password</th>
+                    <th>Assigned Class(es)</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for teacher in teachers %}
+                <tr>
+                    <td>{{ teacher.id }}</td>
+                    <td>{{ teacher.username }}</td>
+                    <td>{{ teacher.password }}</td>
+                    <td>{{ teacher.classes }}</td>
+                    <td>
+                        <form method="POST" action="{{ url_for('delete_teacher_route', teacher_id=teacher.id) }}">
+                            <button class="btn btn-danger btn-sm" onclick="return confirm('Delete this teacher?')">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,9 @@
+opencv-python==4.9.0.80
+face-recognition==1.3.0
+face-recognition-models==0.3.0
+dlib==19.24.2
+numpy==1.24.3
+pillow==10.1.0
+imutils==0.5.4  # Only if you're using it; otherwise, remove
+sqlite3  # comes with Python, no need to install
+s

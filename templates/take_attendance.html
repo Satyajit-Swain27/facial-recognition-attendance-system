@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Take Attendance - {{ class_name }}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .attendance-container {
+            margin-top: 50px;
+        }
+        .log-box {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            height: 300px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+<div class="container attendance-container">
+    <h2 class="text-center mb-4">Attendance for {{ class_name }}</h2>
+
+    <div class="card">
+        <div class="card-body">
+            <p class="lead text-center">Facial recognition is running. Please look at the camera.</p>
+
+            <!-- Stop Camera Button -->
+            <form method="POST" action="{{ url_for('stop_camera') }}">
+                <button type="submit" class="btn btn-danger btn-block">Stop Camera</button>
+            </form>
+
+            <!-- Attendance Logs -->
+            <h5 class="mt-4">Recognized Students</h5>
+            <div id="log-box" class="log-box"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Auto Refresh Attendance Logs -->
+<script>
+    function fetchLogs() {
+        fetch("/attendance_logs")
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("log-box").innerHTML = data.replace(/\n/g, "<br>");
+            });
+    }
+    setInterval(fetchLogs, 3000);  // Refresh logs every 3 seconds
+    window.onload = fetchLogs;
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

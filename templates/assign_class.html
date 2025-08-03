@@ -1,0 +1,59 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Assign Class</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div class="container mt-4">
+        <h2>Assign Class to Teacher</h2>
+        <form method="POST" action="/assign_class">
+            <div class="mb-3">
+                <label>Class Name</label>
+                <input type="text" class="form-control" name="class_name" required>
+            </div>
+            <div class="mb-3">
+                <label>Teacher</label>
+                <select name="teacher_id" class="form-control" required>
+                    {% for t in teachers %}
+                        <option value="{{ t[0] }}">{{ t[1] }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-info">Assign</button>
+        </form>
+    </div>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Assign Class</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div class="container mt-4">
+        <h2>Assign Class to Teacher</h2>
+        <form method="POST" action="{{ url_for('assign_class_route') }}">
+            <div class="mb-3">
+                <label for="class_name">Class Name</label>
+                <input type="text" id="class_name" class="form-control" name="class_name" required>
+            </div>
+            <div class="mb-3">
+                <label for="teacher_id">Select Teacher</label>
+                <select name="teacher_username" class="form-control" required>
+
+                    {% for t in teachers %}
+                        <option value="{{ t.username }}">{{ t.username }}</option>  <!-- New: username as value -->
+
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-info">Assign</button>
+        </form>
+    </div>
+</body>
+</html>

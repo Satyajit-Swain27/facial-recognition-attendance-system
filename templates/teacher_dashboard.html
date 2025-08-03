@@ -1,0 +1,92 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Teacher Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .dashboard-container {
+            margin-top: 50px;
+        }
+        .card {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container dashboard-container">
+        <h2 class="text-center mb-4">Teacher Dashboard</h2>
+
+      
+        <div class="card">
+            <div class="card-header">Select Class for Attendance</div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('start_attendance') }}">
+                    <div class="form-group">
+                        <label for="classSelect">Choose Class</label>
+                        <select class="form-control" id="classSelect" name="class_name" required>
+                            {% for class in classes %}
+                                <option value="{{ class }}">{{ class }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Start Attendance</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Teacher Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .dashboard-container {
+            margin-top: 50px;
+        }
+        .card {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container dashboard-container">
+        <h2 class="text-center mb-4">Teacher Dashboard</h2>
+
+        <!-- Select Class Section -->
+        <div class="card">
+            <div class="card-header">Select Class for Attendance</div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('start_attendance') }}">
+                    <div class="form-group">
+                        <label for="classSelect">Choose Class</label>
+                        <select class="form-control" id="classSelect" name="class_name" required>
+                            {% for class in classes %}
+                                <option value="{{ class }}">{{ class }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Start Attendance</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Logout Button at the Bottom -->
+        <div class="text-center mt-4">
+            <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
+        </div>
+    </div>
+</body>
+</html>

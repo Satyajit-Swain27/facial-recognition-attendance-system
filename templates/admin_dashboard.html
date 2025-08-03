@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .dashboard-container {
+            margin-top: 50px;
+        }
+        .card {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container dashboard-container">
+        <h2 class="text-center mb-4">Admin Dashboard</h2>
+
+        <div class="row">
+            <!-- Enroll Teacher -->
+            <div class="col-md-4">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Enroll Teacher</h5>
+                        <p class="card-text">Add a new teacher to the system.</p>
+                        <a href="{{ url_for('enroll_teacher_page') }}" class="btn btn-primary">Go</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Enroll Student -->
+            <div class="col-md-4">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Enroll Student</h5>
+                        <p class="card-text">Register a student and collect facial data.</p>
+                        <a href="{{ url_for('enroll_student_page') }}" class="btn btn-success">Go</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Assign Class -->
+            <div class="col-md-4">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Assign Class</h5>
+                        <p class="card-text">Assign a class to a teacher by ID.</p>
+                        <a href="{{ url_for('assign_class_page') }}" class="btn btn-warning">Go</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- REPLACE the existing "List of Teachers" card with this -->
+        <div class="row mt-4">
+            <!-- View Teacher List -->
+            <div class="col-md-6">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">View Teacher List</h5>
+                        <p class="card-text">See, download or delete teacher records.</p>
+                        <a href="{{ url_for('view_teacher_list') }}" class="btn btn-info">Go</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- View Student List -->
+            <div class="col-md-6">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">View Student List</h5>
+                        <p class="card-text">See, download or delete student records.</p>
+                        <a href="{{ url_for('view_student_list') }}" class="btn btn-info">Go</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Logout Button -->
+        <div class="text-center mt-4">
+            <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,259 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Enroll Student</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-4">
+        <h2>Enroll New Student</h2>
+        <form method="POST" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label>Student Name</label>
+                <input type="text" name="name" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label>Upload Face Image</label>
+                <input type="file" name="image" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Enroll</button>
+        </form>
+    </div>
+</body>
+</html> -->
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Enroll Student</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script>
+        function startCamera() {
+            const video = document.getElementById('video');
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(stream => {
+                    video.srcObject = stream;
+                })
+                .catch(err => {
+                    alert("Could not access webcam: " + err);
+                });
+        }
+
+        function captureAndSubmit() {
+            const canvas = document.getElementById('canvas');
+            const video = document.getElementById('video');
+            const context = canvas.getContext('2d');
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            const imageData = canvas.toDataURL('image/jpeg');
+
+            const name = document.getElementById('name').value;
+            const className = document.getElementById('class_name').value;
+
+            fetch('/admin/enroll_student', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: name,
+                    class_name: className,
+                    image: imageData
+                })
+            }).then(response => {
+                if (response.redirected) {
+                    window.location.href = response.url;
+                } else {
+                    return response.text().then(text => alert(text));
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+<div class="container mt-4">
+    <h2>Enroll New Student</h2>
+        <form id="enrollForm">
+            <div class="mb-3">
+                <label>Student Name</label>
+                <input type="text" name="name" id="name" class="form-control" required>
+            </div>
+           
+            <div class="mb-3">
+                <label>Class Name</label>
+                <input type="text" name="class_name" id="class_name" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <button type="button" class="btn btn-secondary" onclick="startCamera()">Open Webcam</button>
+                <button type="button" class="btn btn-info" onclick="captureAndSubmit()">Capture & Enroll</button>
+            </div>
+            <div class="mb-3">
+                <video id="video" width="300" height="225" autoplay style="border:1px solid #ccc;"></video>
+                <canvas id="canvas" width="300" height="225" style="display: none;"></canvas>
+            </div>
+        </form>
+</div>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Enroll Student</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .progress {
+            height: 25px;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-4">
+    <h2>Enroll New Student</h2>
+    <form id="enrollForm">
+        <div class="mb-3">
+            <label>Student Name</label>
+            <input type="text" name="name" id="name" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label>Class Name</label>
+            <input type="text" name="class_name" id="class_name" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <button type="button" class="btn btn-secondary" onclick="startCamera()">Open Webcam</button>
+            <button type="button" class="btn btn-info" id="enrollBtn" onclick="captureAndSubmit()">Capture & Enroll</button>
+        </div>
+
+        <div class="mb-3">
+            <video id="video" width="300" height="225" autoplay muted style="border:1px solid #ccc;"></video>
+            <canvas id="canvas" width="300" height="225" style="display: none;"></canvas>
+        </div>
+
+        <div class="mb-3" id="progress-container" style="display: none;">
+            <label>Capture Progress</label>
+            <div class="progress">
+                <div id="progress-bar" class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width: 0%">0%</div>
+            </div>
+        </div>
+
+        <div id="status-message" class="alert mt-3" style="display:none;"></div>
+    </form>
+</div>
+
+<script>
+    let stream;
+    let capturedImages = [];
+    let captureInterval;
+
+    function startCamera() {
+        const video = document.getElementById('video');
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(s => {
+                stream = s;
+                video.srcObject = stream;
+                capturedImages = [];
+                clearInterval(captureInterval);
+                resetProgress();
+                clearStatus();
+            })
+            .catch(err => {
+                showStatus("Could not access webcam: " + err, "danger");
+            });
+    }
+
+    function captureAndSubmit() {
+        const name = document.getElementById('name').value.trim();
+        const className = document.getElementById('class_name').value.trim();
+        const canvas = document.getElementById('canvas');
+        const video = document.getElementById('video');
+        const context = canvas.getContext('2d');
+
+        if (!name || !className) {
+            showStatus("Please enter both student name and class name.", "warning");
+            return;
+        }
+
+        document.getElementById('enrollBtn').disabled = true;
+        let count = 0;
+        const totalImages = 150;
+        const progressContainer = document.getElementById('progress-container');
+        const progressBar = document.getElementById('progress-bar');
+
+        progressContainer.style.display = 'block';
+        capturedImages = [];
+
+        captureInterval = setInterval(() => {
+            if (count >= totalImages) {
+                clearInterval(captureInterval);
+                if (stream) {
+                    stream.getTracks().forEach(track => track.stop());
+                    document.getElementById('video').srcObject = null;
+                }
+                sendImages(name, className);
+                return;
+            }
+
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            const imageData = canvas.toDataURL('image/jpeg');
+            capturedImages.push(imageData);
+            count++;
+
+            const percent = Math.round((count / totalImages) * 100);
+            progressBar.style.width = percent + '%';
+            progressBar.innerText = percent + '%';
+        }, 100);
+    }
+
+    function sendImages(name, className) {
+        fetch('/admin/enroll_student', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                name: name,
+                class_name: className,
+                images: capturedImages
+            })
+        }).then(response => {
+            if (!response.ok) {
+                return response.text().then(text => { throw new Error(text); });
+            }
+            return response.json();
+        }).then(data => {
+            showStatus(data.message || "Enrollment complete!", "success");
+            document.getElementById('enrollForm').reset();
+            resetProgress();
+        }).catch(err => {
+            showStatus("Error uploading images: " + err.message, "danger");
+        }).finally(() => {
+            document.getElementById('enrollBtn').disabled = false;
+        });
+    }
+
+    function resetProgress() {
+        const progressBar = document.getElementById('progress-bar');
+        progressBar.style.width = '0%';
+        progressBar.innerText = '0%';
+        document.getElementById('progress-container').style.display = 'none';
+    }
+
+    function showStatus(message, type) {
+        const status = document.getElementById('status-message');
+        status.className = 'alert alert-' + type + ' mt-3';
+        status.innerText = message;
+        status.style.display = 'block';
+    }
+
+    function clearStatus() {
+        const status = document.getElementById('status-message');
+        status.innerText = '';
+        status.style.display = 'none';
+    }
+</script>
+</body>
+</html>
+
