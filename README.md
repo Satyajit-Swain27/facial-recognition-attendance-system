@@ -40,7 +40,7 @@ project/
 
 
 -------------------------------
-2) How to Run
+2) ##  How to Run
 
 1. **Install dependencies**  
 
@@ -55,7 +55,7 @@ project/
     Visit: http://localhost:5000
 
 ----------------------------------
-🙋‍♂️Team Members
+## Team Members
 
 Member 1 – Satyajit Swain
 
