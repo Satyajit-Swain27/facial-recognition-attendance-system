@@ -1,4 +1,4 @@
-#Facial Recognition-Based Anti-Spoofing Attendance System 
+##Facial Recognition-Based Anti-Spoofing Attendance System 
 
 A smart attendance system using facial recognition and blink detection to prevent spoofing through photos or videos. Built with Python, Flask, OpenCV, Dlib, and SQLite.
 
@@ -56,11 +56,12 @@ project/
 
 ----------------------------------
 🙋‍♂️Team Members
+
 Member 1 – Satyajit Swain
 
 Member 2 – Biswaranjan Padhi
 
-Member 3 – K Ayush kumar
+Member 3 – K Ayush Kumar
 
 Member 4 – Satyajeet Padhi
 
