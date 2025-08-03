@@ -1,4 +1,4 @@
-##Facial Recognition-Based Anti-Spoofing Attendance System 
+##  Facial Recognition-Based Anti-Spoofing Attendance System 
 
 A smart attendance system using facial recognition and blink detection to prevent spoofing through photos or videos. Built with Python, Flask, OpenCV, Dlib, and SQLite.
 
